@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 import os
+import sys
 
-
+sys_vers = sys.platform()
 if sys_vers == 'linux':
     os.system("source /etc/os-release")
 
@@ -14,9 +15,5 @@ if sys_vers == 'linux':
             os.system(
             "dnf update; yum upgrade; sudo dnf install python3-pip; pip install python-nmap; dnf install python"
             )
-elif sys_vers == 'win32':
-    # i need to update the system, download nmap, and make sure python, pip, and the nmap module are all installed. 
-    pass
-
 else:
     print("This script is running on an unsupported distribution.")
