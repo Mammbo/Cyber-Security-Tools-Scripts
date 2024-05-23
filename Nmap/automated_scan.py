@@ -54,22 +54,31 @@ def tcp_syn_host_scan(target, out_xml, formatted_time):
     subprocess.Popen(nmap_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE.communicate())
     makeOwner(out_xml)
 
-
-#make myself the owner of the file using uid and guid of who is runing the process 
-
-# make sure I am running this in root  by getting the uid and guid 
-
-# make sure i get CWD 
 #port scanning (1000)
 
+def tcpsyn_port_scan_1000(target, out_xml, formatted_time):
+    out_xml = os.path.join(out_xml,f'{formatted_time}top_1000_portscan.xml')
+    nmap_cmd = f"/usr/bin/nmap {target} --top-ports 1000 -n -Pn -sS -T4 --min-parallelism 100 --min-rate 64 -vv -oX {out_xml}"
+    sub_args = shlex.split(nmap_cmd)
+    subprocess.Popen(sub_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+    makeOwner(out_xml)
+
 #service detection 
+def service_scan(target_ip, target_ports, out_xml, formatted_time):
+    out_xml = os.path.join(out_xml,f'{formatted_time}-{target_ip}_services.xml')
+    nmap_cmd = f"/usr/bin/nmap {target_ip} -p {target_ports} --exclude-ports 9100-9107, 515, 1028, 1068, 1503, 1720, 1935, 2040, 3388 -n -Pn -sV --version-intensity 6 --script banner -T4 -vv -oX {out_xml}"
+    sub_args = shlex.split(nmap_cmd)
+    subprocess.Popen(sub_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
 
 #os detection 
+def os_scan(target, ):
 
 # ssl ciphers
+def ssl_cipher_scan():
+
 
 #ssl certs 
-
+def ssl_certs_scan():
 #all ports scan 
 
 
