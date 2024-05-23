@@ -4,9 +4,9 @@ import sys
 
 sys_vers = sys.platform()
 if sys_vers == 'linux':
-    os.system("source /etc/os-release")
+    os.system("cat /etc/os-release")
 
-    if os.system('"$ID" == "debian"'):
+    if os.system('"$ID" == "debian"') or os.system('"$ID" == "ubuntu"') or os.system('"$ID" == "kali"'):
         os.system(
                 "apt update; apt upgrade; apt install nmap; sudo apt install python3-pip; pip install python-nmap; apt-get install python3"
         )

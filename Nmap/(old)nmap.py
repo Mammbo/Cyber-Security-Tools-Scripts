@@ -137,10 +137,10 @@ def flatten_host_data(host_data):
 
 
 host = network(sys_vers)
-cnetwork_ip = host.split()
+network_ip = host.split()
 target = input("Do you want to scan your network or a target's network? (1/2): ")
 if target == '1':
-    host_data = network_scanner(computer_ip[0].replace("'", ""))
+    host_data = network_scanner(network_ip[0].replace("'", ""))
 elif target == '2':
     target_ip = input("Enter the targets ip and or cidr notation: ")
     host_data = network_scanner(target_ip)
