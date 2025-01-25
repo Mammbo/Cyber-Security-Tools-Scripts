@@ -199,7 +199,7 @@ clamscan_params=()
 
 #Delete the bad stuff (aka hacking tools)
 
-bad_software=("wireshark-qt" "nmap" "medusa" "john" "sqlmap" "hydra" "zenmap" "ophcrack" "tcpdump" "kismet" "snort" "fwsnort" "nessus" "netcat-traditional" "aircrack-ng" "nikto" "wifite" "yersinia" "hashcat" "macchanger" "pixiewps" "bbqsql" "proxychains" "whatweb" "dirb" "traceroute" "httrack" "openvas" "4g8" "acccheck" "airgraph-ng" "bittorrent" "bittornado" "bluemon" "btscanner" "buildtorrent" "brutespray" "dsniff" "ettercap" "hunt" "nast" "netsniff-ng" "python-scapy" "sipgrep" "sniffit" "tcpick" "tcpreplay" "tcpslice" "tcptrace" "tcptraceroute" "tcpxtract" "irpas" "mdk3" "reaver" "slowhttptest" "ssldump" "sslstrip" "thc-ipv6" "bro" "darkstat" "dnstop" "flowscan" "nfstrace" "nstreams" "ntopng" "ostinato" "softflowd" "tshark" "gameconqueror" "manaplus" "socat" "fcrackzip" "dsniff" "rfdump" "bind9" "deluge-gtk" "ettercap-common" "telnet")
+bad_software=("wireshark-qt" "nmap" "medusa" "john" "sqlmap" "hydra" "zenmap" "ophcrack" "tcpdump" "kismet" "snort" "fwsnort" "nessus" "netcat-traditional" "aircrack-ng" "nikto" "wifite" "yersinia" "hashcat" "macchanger" "pixiewps" "bbqsql" "proxychains" "whatweb" "dirb" "traceroute" "httrack" "openvas" "4g8" "acccheck" "airgraph-ng" "bittorrent" "bittornado" "bluemon" "btscanner" "buildtorrent" "brutespray" "dsniff" "ettercap" "hunt" "nast" "netsniff-ng" "python-scapy" "sipgrep" "sniffit" "tcpick" "tcpreplay" "tcpslice" "tcptrace" "tcptraceroute" "tcpxtract" "irpas" "mdk3" "reaver" "slowhttptest" "ssldump" "sslstrip" "thc-ipv6" "bro" "darkstat" "dnstop" "flowscan" "nfstrace" "nstreams" "ntopng" "ostinato" "softflowd" "tshark" "gameconqueror" "manaplus" "socat" "fcrackzip" "dsniff" "rfdump" "bind9" "deluge-gtk" "ettercap-common" "telnet" "free-civ" "endless-sky" "rsh-server" "telnetd" "pvgn" "sucrack" "changme" "unworkable")
 
 
 
@@ -218,13 +218,13 @@ function menu {
 	echo ' 11) Configure SSH    			 41) Password Authentication and strong passwords'   	 
 	echo ' 12) Configure Samba  			 42) Systemctl Configurations'
 	echo ' 13) Configure FTP   			 43) Etc sys configs(PAM,auditing,hosts,DCCP,ntp,motd,coredump,ip spoof'    
-	echo ' 14) Configure PostFix'
-	echo ' 15) Configure Nginx'
+	echo ' 14) Configure PostFix         44) View Shared Memory'
+	echo ' 15) Configure Nginx           45) View Immutable Files/Dirs'
 	echo ' 16) Configure Apache'
 	echo ' 17) Configure NFS'
 	echo ' 18) Configure Kernel'
 	echo ' 19) Secure and edit Cron'
-	Get set up to work please daniel. echo ' 20) Add Your Own Scripts to Cron + Backhttps://gchq.github.io/CyberChef/ups'
+	echo ' 20) Add Your Own Scripts to Cron + Backhttps://gchq.github.io/CyberChef/ups'
 	echo ' 21) Configure DNS( Domain Name Server ) '
 	echo ' 22) Configure NTP ( Network Transfer Protocol ) '
 	echo ' 23) List files with high file Permissions '
@@ -1361,9 +1361,10 @@ sudo dpkg-reconfigure unattended-upgrades
    		 echo "kernel.exec-shield=1" >> $kernel_params
    		 echo "kernel.randomize_va_space=1" >> $kernel_params
    		 echo "kernel.randomize_va_space=1" >> $kernel_params
-   		 echo "net.ipv4.tcp_syncookies = 1" >> $kernel_params
-   		 echo "net.ipv4.tcp_max_syn_backlog = 2048" >> $kernel_params
-   		 echo "net.ipv4.tcp_synack_retries = 3" >> $kernel_params
+   		 echo "net.ipv4.tcp_syncookies=1" >> $kernel_params
+   		 echo "net.ipv4.tcp_max_syn_backlog=2048" >> $kernel_params
+   		 echo "net.ipv4.tcp_synack_retries=3" >> $kernel_params
+         echo "kernel.dmesg_restrict=1" >> $kernel_params
 
    	 else
    		 echo "okay my bad :("
@@ -2149,6 +2150,7 @@ sudo dpkg-reconfigure unattended-upgrades
    	 echo "net.ipv6.conf.default.accept_ra = 0" >> /etc/sysctl.conf
    	 echo "net.ipv6.conf.all.accept redirects = 0" >> /etc/sysctl.conf
    	 echo "kernel.randomize_va_space = 2" >> /etc/sysctl.conf
+   	 echo "kernel.perf_event_paranoid = 3" >> /etc/sysctl.conf
    	 #panic when out of memory
    	 echo "vm.panic_on_oom = 1" >> /etc/sysctl.conf
    	 #reboot system 10 seconds after panic
@@ -2166,7 +2168,7 @@ sudo dpkg-reconfigure unattended-upgrades
    	 sudo sysctl -w net.ipv4.conf.default.accept_source_route=0
    	 sudo sysctl -w net.ipv4.route.flush=1
    	 sudo sysctl -w net.ipv4.conf.all.accept_redirects=0
-   	 sudo sysctl -w net.ipv4.conf.default.accept redirects=0
+   	 sudo sysctl -w net.ipv4.conf.default.accept_redirects=0
    	 sudo sysctl -w net.ipv4.route.flush=1
    	 sudo sysctl -w net.ipv4.conf.all.secure_redirects=0
    	 sudo sysctl -w net.ipv4.conf.default.secure_redirects=0
@@ -2190,6 +2192,7 @@ sudo dpkg-reconfigure unattended-upgrades
    	 sudo sysctl -w net.ipv6.conf.default.accept_redirects=0
    	 sudo sysctl -w net.ipv6.route.flush=1
    	 sudo sysctl -w kernel.randomize_va_space=2
+   	 sudo sysctl -w kernel.perf_event_paranoid=3
    	 sudo sysctl -p
    	 
    	 echo "systemctl has been configured"
@@ -2311,8 +2314,159 @@ sudo dpkg-reconfigure unattended-upgrades
    	 echo "tmpfs  /run/shm	tmpfs  defaults,noexec,nosuid	0	0" >> /etc/fstab
    	 ;;
 
-   	 
-   	 
+    45)
+    
+   	 prompt 'View files immutables or Directory immutables'
+   	 if [ $? = 1 ]; then
+   	    sudo find / -type f -exec lsattr {} + 2>/dev/null | awk '$1 ~ /i/ {print $2}' 		 
+   	 else
+   	    sudo find / -type d -exec lsattr {} + 2>/dev/null | awk '$1 ~ /i/ {print $2}'
+
+   	 fi
+   	 ;;
+  #find all suid/sgid bits 
+    46)
+     find / \( -perm -4000 -o -perm -2000 \) -exec ls -ld {} \; 2>/dev/null
+     ;;
+   #Sticky bits
+    47)
+     find / -type d -perm -1000 -exec ls -lda {} \; 2>/dev/null
+     ;;
+
+   #htop for processes
+    48)
+     apt install htop
+     htop 
+     ;;
+   #list masked services
+    49)
+     systemctl list-unit-files --state=masked
+     sudo systemctl mask kdump --now
+     ;;
+   #debsums 
+    50)
+     apt install debsums 
+     debsums -s 
+     debsums -c
+     ;;
+
+   #kernel modules 
+    51) 
+     lsmod
+     ;;
+   #check if all users have a password through /etc/shadow
+    52)
+     awk -F: '!$2 {print $1}' /etc/shadow
+     ;;
+   #check if there are blank passwords for any users
+    53)
+     PAM_FILE="/etc/pam.d/common-password"
+
+     # Check if the file contains 'nullok'
+     if grep -q "nullok" "$PAM_FILE"; then
+         # Backup the original file before modifying it
+         cp "$PAM_FILE" "$PAM_FILE.bak"
+         echo "Backup created: $PAM_FILE.bak"
+        
+         # Remove lines containing 'nullok'
+         sudo sed -i '/nullok/ { s/\s*nullok\s*/ /g }' "$PAM_FILE"
+         echo "Lines containing 'nullok' have been removed."
+     else
+         echo "'nullok' not found in $PAM_FILE. No changes made."
+     fi
+
+     ;;
+   #directory perms 
+    54)
+     sudo chgrp syslog /var/log
+     sudo chown root /var/log
+     sudo chown :root /usr/bin/journalctl
+     sudo chown root /usr/bin/journalctl
+     sudo chgrp adm /var/log/syslog
+     sudo chown syslog /var/log/syslog
+     sudo find /lib /usr/lib /lib64 ! -group root -type d -exec chgrp root '{}' \;
+     sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -group root -type d -exec chgrp root '{}' \;
+     sudo find /lib /usr/lib /lib64 ! -user root -type d -exec chown root '{}' \;
+     sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin ! -user root -type d -exec chown root '{}' \;
+     sudo chmod 0755 /var/log
+     sudo find /lib /lib64 /usr/lib -perm /022 -type f -exec chmod 755 '{}' \;
+     sudo find /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin -perm /022 -type f -exec chmod 755 '{}' \;
+     echo "Done"
+     ;;
+
+    #dirs to maybe add sticky bit to 
+     55) 
+      sudo find / -type d -perm -002 ! -perm -1000
+      echo "If any pop up do sudo chmod +t to change this"
+      ;;
+
+    #configure to use pam_faillock
+     56)
+   
+      # Define the PAM and faillock files
+      PAM_FILE="/etc/pam.d/common-auth"
+      FAILLLOCK_FILE="/etc/security/faillock.conf"
+
+      # Append the PAM lines directly to the PAM file
+      echo "auth [default=die] pam_faillock.so authfail" | sudo tee -a "$PAM_FILE" > /dev/null
+      echo "auth sufficient pam_faillock.so authsucc" | sudo tee -a "$PAM_FILE" > /dev/null
+      echo "auth required pam_faildelay.so delay=4000000" | sudo tee -a "$PAM_FILE" > /dev/null
+
+      # Append the faillock lines directly to the faillock.conf file
+      echo "audit" | sudo tee -a "$FAILLLOCK_FILE" > /dev/null
+      echo "silent" | sudo tee -a "$FAILLLOCK_FILE" > /dev/null
+      echo "deny = 3" | sudo tee -a "$FAILLLOCK_FILE" > /dev/null
+      echo "fail_interval = 900" | sudo tee -a "$FAILLLOCK_FILE" > /dev/null
+      echo "unlock_time = 0" | sudo tee -a "$FAILLLOCK_FILE" > /dev/null
+
+      # Define the files to modify
+      PAM_LOGIN_FILE="/etc/pam.d/login"
+      LIMITS_FILE="/etc/security/limits.conf"
+
+      # Add the line for providing feedback on last login to the PAM login file
+      echo "session required pam_lastlog.so showfailed" | sudo tee -a "$PAM_LOGIN_FILE" > /dev/null
+
+      # Add the line to limit the number of concurrent sessions to 10 in limits.conf
+      echo "* hard maxlogins 10" | sudo tee -a "$LIMITS_FILE" > /dev/null
+      ;;
+
+     57) 
+     #even more password stuff 
+      sudo apt-get install -y libpam-pwquality
+
+      # Step 2: Configure /etc/security/pwquality.conf
+      echo "Configuring /etc/security/pwquality.conf..."
+      echo "dictcheck = 1" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+      echo "minlen = 15" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+      echo "difok = 8" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+      echo "enforcing = 1" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+      echo "lcredit = -1" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+      echo "dcredit = -1" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+      echo "ocredit = -1" | sudo tee -a /etc/security/pwquality.conf > /dev/null
+
+        # Step 3: Configure /etc/pam.d/common-password
+      echo "Configuring /etc/pam.d/common-password..."
+      echo "password requisite pam_pwquality.so retry=3" | sudo tee -a /etc/pam.d/common-password > /dev/null
+      echo "password [success=1 default=ignore] pam_unix.so obscure sha512 shadow remember=5 rounds=5000" | sudo tee -a /etc/pam.d/common-password > /dev/null
+
+        # Step 4: Configure /etc/login.defs
+      echo "Configuring /etc/login.defs..."
+      echo "ENCRYPT_METHOD SHA512" | sudo tee -a /etc/login.defs > /dev/null
+      echo "PASS_MIN_DAYS 1" | sudo tee -a /etc/login.defs > /dev/null
+      echo "UMASK 077" | sudo tee -a /etc/login.defs > /dev/null
+
+        # Step 5: Lock the root account
+      echo "Locking the root account..."
+      sudo passwd -l root
+
+        # Step 6: Set the default password expiration policy to 35 days
+      echo "Setting default password expiration to 35 days..."
+      sudo useradd -D -f 35
+      ;;
+# check if mult users with same uid 
+     58)
+      awk -F ":" 'list[$3]++{print $1, $3}' /etc/passwd
+      ;;
 	# Exit
    		 99)
        		 echo 'Thank you for using this script!'
